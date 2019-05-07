@@ -22,7 +22,7 @@ function varargout = guiFigure(varargin)
 
 % Edit the above text to modify the response to help guiFigure
 
-% Last Modified by GUIDE v2.5 05-May-2019 14:18:41
+% Last Modified by GUIDE v2.5 08-May-2019 01:24:04
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -515,9 +515,17 @@ if ~get(handles.s_step, 'value')
                 end
             end
             if ~error
-                [r, err, arr, eTime] = bisection(eqn, l, u, iter, eps, true, false, handles);
+                
+                [r, err, arr, eTime, l, u ,k]= bisection(eqn, l, u, iter, eps, true, false, handles);
+                handles.save_root = r;
+                handles.save_error = err;
+                handles.save_arr = arr;
+                handles.save_eTime = eTime;
+                handles.save_name = 'bisection';
+                handles.column_names ={ 'iter' , 'lower' , 'upper' ,'root' ,'error'};
+                guidata(hObject,handles);
                 show_res(arr, handles, 1);
-                str = strcat('root: ', num2str(r), ' | time of execution: ', num2str(eTime), ' | error :', num2str(err));
+                str = strcat('root: ', num2str(r), ' | time of execution: ', num2str(eTime), ' | error :', num2str(err) ,' | number of iteraions expected :  ',num2str (k));
                 set(handles.sol, 'String', str);
                 %disp(str);
             end
@@ -564,6 +572,13 @@ if ~get(handles.s_step, 'value')
             end
             if ~error
                 [i,xr,elapsed,xl,xu,arr,presion]=false_position(eqn, l, u, iter, eps,true, false, handles);
+                handles.save_root = xr;
+                handles.save_error = 100 - presion;
+                handles.save_arr = arr;
+                handles.save_eTime = elapsed;
+                handles.save_name = 'false_position';
+                handles.column_names ={ 'iter' , 'lower' , 'upper' ,'root' ,'f(x)'};
+                guidata(hObject,handles);
                 show_res(arr, handles, 2);
                 str = strcat('root: ', num2str(xr), ' | time of execution: ', num2str(elapsed), ' | precesion :', num2str(presion));
                 set(handles.sol, 'String', str);
@@ -605,9 +620,16 @@ if ~get(handles.s_step, 'value')
                 end
             end
             if ~error
-                [i,xi,presion,arr,elapsed_time]= fixed_point(eqn, x0, iter, eps, true , false, handles);
+                [i,xi,presion,arr,elapsed_time,gx]= fixed_point(eqn, x0, iter, eps, true , false, handles);
+                handles.save_root = xi;
+                handles.save_error = 100 - presion;
+                handles.save_arr = arr;
+                handles.save_eTime = elapsed_time;
+                handles.save_name = 'fixed_point';
+                  handles.column_names ={ 'iter' , 'Xi' , 'error' };
+                guidata(hObject,handles);
                 show_res(arr, handles, 3);
-                str = strcat('root: ', num2str(xi), ' | time of execution: ', num2str(elapsed_time), ' | precesion :', num2str(presion));
+                str = strcat('root: ', num2str(xi), ' | time of execution: ', num2str(elapsed_time), ' | precesion :', num2str(presion), ' | g`(x) =' ,num2str(gx));
                 set(handles.sol, 'String', str);
             end
         case 4
@@ -647,6 +669,13 @@ if ~get(handles.s_step, 'value')
             end
             if ~error
                 [x1, err, arr, eTime] = newton(eqn, x0, iter, eps, true, false, handles);
+                handles.save_root = x1;
+                handles.save_error =err ;
+                handles.save_arr = arr;
+                handles.save_eTime = eTime;
+                handles.save_name = 'newton';
+                  handles.column_names ={ 'iter' , 'Xi' , 'Xi+1' ,'error'};
+                guidata(hObject,handles);
                 show_res(arr, handles, 4);
                 str = strcat('root: ', num2str(x1), ' | time of execution: ', num2str(eTime), ' | error :', num2str(err));
                 set(handles.sol, 'String', str);
@@ -694,6 +723,13 @@ if ~get(handles.s_step, 'value')
             end
             if ~error
                 [xi, arr, i, err, ex_time] = Secant(x0, x1, eps, iter, eqn, true , false, handles);
+                 handles.save_root = xi;
+                handles.save_error =err;
+                handles.save_arr = arr;
+                handles.save_eTime = ex_time;
+                handles.save_name = 'Secant';
+                  handles.column_names ={ 'iter' , 'Xi-1' , 'Xi' ,'Xi+1' ,'error'};
+                guidata(hObject,handles);
                 show_res(arr, handles, 5);
                 str = strcat('root: ', num2str(xi), ' | time of execution: ', num2str(ex_time), ' | error :', num2str(err));
                 set(handles.sol, 'String', str);
@@ -735,6 +771,13 @@ if ~get(handles.s_step, 'value')
             end
             if ~error
                 [ root, iter, ex_time, err, all_iter ] = birgeVieta(eqn, x0, iter, eps, true, handles);
+                handles.save_root = root;
+                handles.save_error = err;
+                handles.save_arr = all_iter;
+                handles.save_eTime = ex_time;
+                handles.save_name = 'birgeVieta';
+                  handles.column_names ={ 'iter' , 'a' , 'b' ,'c' };
+                guidata(hObject,handles);
                 str = 'roots : ';
                 for i=1:size(root, 2)
                     str = strcat(str, num2str(root(i)), ', ');
@@ -1206,3 +1249,15 @@ if floor(parameter) == parameter
 else
     set(handles.eps_t, 'String', num2str(parameter));
 end
+
+
+% --------------------------------------------------------------------
+function save_ClickedCallback(hObject, eventdata, handles)
+% hObject    handle to save (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+size(handles.save_arr)
+filter = {'*.txt'};
+[file,path] = uiputfile(filter,'output.txt');
+write_file1(file, handles.save_root, handles.save_error,  handles.save_arr,...
+    handles.save_eTime,  handles.save_name , handles.column_names);

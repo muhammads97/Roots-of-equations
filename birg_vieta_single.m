@@ -1,7 +1,6 @@
 function [ root, iter, ex_time, err, all_iter ] = birg_vieta_single( eqn, x0, p )
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
-
     if ~exist('p', 'var')
         p = true;
     end

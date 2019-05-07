@@ -1,6 +1,7 @@
 function [x1, err, arr, eTime] = newton(eqn, x0, n, tol, isPlot, isSingle, handles)
-
-    
+cla(handles.axes1);
+cla(handles.axes2);
+cla(handles.axes3);
 f = inline(eqn);
 e = strrep(eqn, '.^', '^');
 ftemp = sym(e);

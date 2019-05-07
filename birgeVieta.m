@@ -1,4 +1,7 @@
 function [ root, iter, ex_time, err, all_iter ] = birgeVieta(eqn, x0, num_iter, eps, p, handles)
+cla(handles.axes1);
+cla(handles.axes2);
+cla(handles.axes3);  
     if ~exist('p', 'var')
         p = true;
     end

@@ -1,4 +1,7 @@
 function [i,xr,elapsed,xl,xu,arr,presion, err] = false_position(eqn , xl , xu , iter , epsolin , plot_mode , single_mode, handles)
+ cla(handles.axes1);
+cla(handles.axes2);
+cla(handles.axes3);
     tic;
     arr =  zeros(1,5);
     err = zeros(1,2);

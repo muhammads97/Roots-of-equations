@@ -1,5 +1,7 @@
-function [r, err, arr, eTime, l, u] = bisection(eqn, l, u, n, tol, isPlot, isSingle, handles)
-
+function [r, err, arr, eTime, l, u ,Expected_no_of_iters] = bisection(eqn, l, u, n, tol, isPlot, isSingle, handles)
+cla(handles.axes1);
+cla(handles.axes2);
+cla(handles.axes3);
 f = inline(eqn);
 arr = zeros(1, 5);
 itr = zeros(n, 1);
@@ -7,7 +9,7 @@ roots = zeros(n, 1);
 errors = zeros(1, 1);
 tempxl = l;
 tempxu = u;
-
+Expected_no_of_iters = floor((log(u-l)  - log(tol) )/log(2));
 tic
 for i = 1 : n
     arr(i, 2) = l;
@@ -67,5 +69,5 @@ if (isSingle)
     y = linspace(min(f(x))-100 ,max(f(x))+ 100);
     plot(x, f(x),repmat(tempxl,[size(y) 1]), y,'g--', repmat(tempxu,[size(y) 1]) , y,'r--', repmat(r, [size(y) 1]), y, 'm--', 'LineWidth', 1);
 end
-write_file1(r, err, arr, eTime, 'Bisection Method');
+%write_file1(r, err, arr, eTime, 'Bisection Method');
 end

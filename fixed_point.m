@@ -1,4 +1,7 @@
-function [i,xi,presion,arr,elapsed_time] = fixed_point(eqn,x0,iter,epsilon,plot_mode , single_mode, handles)
+function [i,xi,presion,arr,elapsed_time ,gx] = fixed_point(eqn,x0,iter,epsilon,plot_mode , single_mode, handles)
+cla(handles.axes1);
+cla(handles.axes2);
+cla(handles.axes3);
 tic;
 eqn = strcat(eqn , ' + x') ;
 e = strrep(eqn, '.^', '^');

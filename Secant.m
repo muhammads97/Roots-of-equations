@@ -1,5 +1,7 @@
 function [xi, arr, i, err, ex_time, x1, x0] = Secant(x0, x1, epsilon, iterations, eqn, plotMode, singleMode, handles)
-
+cla(handles.axes1);
+cla(handles.axes2);
+cla(handles.axes3);
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 tic;
