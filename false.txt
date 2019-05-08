@@ -1,0 +1,11 @@
+		false_position
+
+the steps are:
+	iter		lower		upper		root		f(x)	
+	1.000000	1.000000	3.000000	1.750000	-0.937500
+
+The Root is: 1.750000
+
+Elapsed Time: 0.033483
+
+Error: 100.000000

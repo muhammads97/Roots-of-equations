@@ -3,7 +3,7 @@ function [] = write_file1(file,r, err, arr, eTime, name , column_names)
     fprintf(fileID, '\t\t%s\n\n', name);
     fprintf(fileID, 'the steps are:\n');
     n = length(column_names);
-    
+       
     if ~strcmp(name, 'birgeVieta')
         for i = 1 : n
             fprintf(fileID, '\t%s\t', char(column_names(i)));
