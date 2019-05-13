@@ -66,7 +66,9 @@ if (plotMode)
     plot(x,fx);
     xlabel('x')
     ylabel('f(X)');
-   
+    hold on
+    plot( [x0 , x1 , xi  ],  [ f(x0) , 0 ] , '--or' ,'Color', [0 0.7 0])
+    plot(  [xi , xi  ],  [ 0 , f(xi)] , '--or', 'Color' , [1 0 0])
 end
 
 if (singleMode)

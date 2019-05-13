@@ -1159,7 +1159,7 @@ function solve_Callback(hObject, eventdata, handles)
                     set(handles.iterations, 'visible', 'off');
                 end
                 %[x1, err, arr, eTime] = newton(eqn, x0, iter, eps, true, false, handles);
-                [root ,x1, arr,i ,err, eTime] = Modified_NewtonRaphson(get(handles.eqn_text, 'String'), handles.xi,  str2num(get(handles.eps_t, 'String')),1, false, false, handles);
+                [root ,x1, arr,i ,err, eTime] = Modified_NewtonRaphson(get(handles.eqn_text, 'String'), handles.xi,  str2num(get(handles.eps_t, 'String')),1, false, true, handles);
                 handles.save_root = x1;
                 handles.save_error = err ;
                 handles.save_arr = arr;
