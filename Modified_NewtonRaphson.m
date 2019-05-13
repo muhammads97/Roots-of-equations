@@ -1,5 +1,5 @@
-function [root] = Modified_NewtonRaphson(eqn, x0, epsilon, iterations, plotMode, singleMode, handles)
-%UNTITLED Summary of this function goes here
+function [root,xi, arr, i, err, ex_time] = Modified_NewtonRaphson(eqn, x0, epsilon, iterations, plotMode, singleMode, handles)
+  %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 %newton_gen find a root of a function using newton method
 
@@ -13,11 +13,11 @@ dfn = inline(df); %1ST DERVATIVE OF FUNCTION
 df2 = diff(df);
 ddfn = inline(df2);  %2ND DERVATIVE OF FUNCTION
 tempx0 = x0;
-
-arr = zeros(iterations, 4);
-itr = zeros(iterations);
-errors = zeros(iterations);
-roots = zeros(iterations);
+root = 0;
+arr = zeros(0, 4);
+itr = zeros(0);
+errors = zeros(0);
+roots = zeros(0);
 
 tic
 for  i = 1 : iterations
@@ -66,9 +66,7 @@ if (plotMode)
     plot(x,fx);
     xlabel('x')
     ylabel('f(X)');
-    hold on
-    plot( [x0 , x1 , xi  ],  [ f(x0) , 0 ] , '--or' ,'Color', [0 0.7 0])
-    plot(  [xi , xi  ],  [ 0 , f(xi)] , '--or', 'Color' , [1 0 0])
+   
 end
 
 if (singleMode)

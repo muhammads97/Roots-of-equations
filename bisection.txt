@@ -3,9 +3,10 @@
 the steps are:
 	iter		lower		upper		root		error	
 	1.000000	1.000000	5.000000	3.000000	2.000000
+	2.000000	1.000000	3.000000	2.000000	0.000000
 
-The Root is: 3.000000
+The Root is: 2.000000
 
-Elapsed Time: 0.000569
+Elapsed Time: 0.006536
 
-Error: 2.000000
+Error: 0.000000

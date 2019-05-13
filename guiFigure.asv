@@ -846,14 +846,14 @@ function solve_Callback(hObject, eventdata, handles)
                     [xi5, arr5, i5, err5, ex_time5, x15, x05] = Secant(x0, x1, eps, iter, eqn, false, false, handles);
                     [root6,xi6, arr6, i6, err6, ex_time6] = Modified_NewtonRaphson(eqn, x0, eps, iter, false, false,handles)
                     
-                    str = strcat('bisection =>   root : ',num2str(r1) ,'  precision : ' ,num2str((1 - err1)*100), '  time :',num2str(eTime1),char(10));
-                    str = strcat(str , '   false-position =>   root : ',num2str(xr2) ,' precision : ' ,num2str(presion2), '  time :',num2str(elapsed2),char(10));
-                    str = strcat(str , '   fixed_point =>   root : ',num2str(xi3) ,' precision : ' ,num2str(presion3), '  time :',num2str(elapsed_time3),char(10));
-                    str = strcat(str , '   newton =>   root : ',num2str(x14) ,' precision : ' ,num2str((1 - err4)*100), '  time :',num2str(eTime4),char(10));
-                    str = strcat(str , '   Secant =>   root : ',num2str(xi5) ,' precision : ' ,num2str((100 - err5)), '  time :',num2str(ex_time5),char(10));
-                    str = strcat(str , '   general algorithm =>   root : ',num2str(root6) ,' precision : ',num2str((100 - err6)), '  time :',num2str(ex_time6));
+                    str = strcat('bisection =>   root : ',r1 ,'precision : ' ,(1 - err1)*100, '  time :',eTime1,char(10));
+                    str = strcat(str , '  false-position =>   root : ',xr2 ,'precision : ' ,presion2, '  time :',elapsed2,char(10));
+                    str = strcat(str , '  fixed_point =>   root : ',xi3 ,'precision : ' ,presion3, '  time :',elapsed_time3,char(10));
+                    str = strcat(str , '  newton =>   root : ',x14 ,'precision : ' ,(1 - err4)*100, '  time :',eTime4,char(10));
+                    str = strcat(str , '  Secant =>   root : ',xi5 ,'precision : ' ,(1 - err5), '  time :',ex_time5,char(10));
+                    str = strcat(str , '  general algorithm =>   root : ',root6 ,'precision : ',(100 - err6), '  time :',ex_time6);
                     
-                    set(handles.sol, 'String', str);
+                    
                     
                     
                     cla(handles.axes1);
@@ -920,13 +920,13 @@ function solve_Callback(hObject, eventdata, handles)
                     end
                 end
                 if ~error
-                    [root,xi, arr, i, err, ex_time] = Modified_NewtonRaphson(eqn, x0, eps, iter, true, false,handles);
+                    [root,xi, arr, i, err, ex_time] = Modified_NewtonRaphson(eqn, x0, eps, iter, true, false,handles)
                     handles.save_root = root;
                     handles.save_error = err ;
                     handles.save_arr = arr;
                     handles.save_eTime = ex_time;
-                    handles.save_name = 'general';
-                    handles.column_names ={ 'iter' , 'Xi' , '     Xi+1' ,'error'};
+                    handles.save_name = 'newton-modified';
+                    handles.column_names ={ 'iter' , 'Xi' , 'Xi+1' ,'error'};
                     guidata(hObject,handles);
                     show_res(arr, handles, 4);
                     str = strcat('root: ', num2str(root), ' | time of execution: ', num2str(ex_time), ' | error :', num2str(err));
@@ -1143,34 +1143,6 @@ function solve_Callback(hObject, eventdata, handles)
                 set(handles.sol, 'String', str);
                 
             case 7
-            case 8
-                if(~isfield(handles, 'xi'))
-                    set(handles.axes2, 'visible', 'off');
-                    set(handles.axes3, 'visible', 'off');
-                    cla(handles.axes2);
-                    cla(handles.axes3);
-                    cla(handles.axes1);
-                    handles.xi = str2num(get(handles.newton_x0, 'String'));
-                    col = {'i', 'Xi', 'Xi+1', 'error'};
-                    handles.t=uitable([0 0 0 0], col, 'position', [850, 50, 350, 450]);
-                    set(handles.text18, 'visible', 'off');
-                    set(handles.text21, 'visible', 'off');
-                    set(handles.select_root, 'visible', 'off');
-                    set(handles.iterations, 'visible', 'off');
-                end
-                %[x1, err, arr, eTime] = newton(eqn, x0, iter, eps, true, false, handles);
-                [root ,x1, arr,i ,err, eTime] = Modified_NewtonRaphson(get(handles.eqn_text, 'String'), handles.xi,  str2num(get(handles.eps_t, 'String')),1, false, false, handles);
-                handles.save_root = x1;
-                handles.save_error = err ;
-                handles.save_arr = arr;
-                handles.save_eTime = eTime;
-                handles.save_name = 'general';
-                handles.column_names ={ 'iter' , 'Xi' , 'Xi+1' ,'error'};
-                guidata(hObject,handles);
-                handles.xi = x1;
-                data=get(handles.t, 'data');
-                set(handles.t, 'data', [cell(data);num2cell(arr)]);
-                guidata(hObject,handles);
         end
     end
     
@@ -1385,17 +1357,6 @@ function openFile_ClickedCallback(hObject, eventdata, handles)
             set(handles.all_param, 'visible', 'on');
             set(handles.s_step, 'Value', 0);
             set(handles.s_step, 'Visible', 'off');
-         case 'general'
-            set(handles.methods_menu, 'Value', 8.0);
-            set(handles.newton_x0, 'String', intervals(1));
-            set(handles.bi_param,'visible','off');
-            set(handles.fixed_param,'visible','off');
-            set(handles.false_param,'visible','off');
-            set(handles.secant_param,'visible','off');
-            set(handles.newton_param,'visible','on');
-            set(handles.birge_param,'visible','off');
-            set(handles.n_root, 'visible', 'off');
-            set(handles.all_param, 'visible', 'off');
     end
     
     parameter = str2num(fgetl(fileID));
@@ -1411,6 +1372,7 @@ function save_ClickedCallback(hObject, eventdata, handles)
     % hObject    handle to save (see GCBO)
     % eventdata  reserved - to be defined in a future version of MATLAB
     % handles    structure with handles and user data (see GUIDATA)
+    size(handles.save_arr)
     filter = {'*.txt'};
     [file,path] = uiputfile(filter,'output.txt');
     write_file1(file, handles.save_root, handles.save_error,  handles.save_arr,...
