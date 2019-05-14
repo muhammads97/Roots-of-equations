@@ -38,6 +38,13 @@ switch method
         set(handles.text21, 'visible', 'off');
         set(handles.select_root, 'visible', 'off');
         set(handles.iterations, 'visible', 'off');
+    case 9
+        col = { 'iter' , 'p0' , 'p1' ,'p2' ,'p','error'};
+        handles.t=uitable(arr, col, 'position', [850, 50, 350, 450]);
+        set(handles.text18, 'visible', 'off');
+        set(handles.text21, 'visible', 'off');
+        set(handles.select_root, 'visible', 'off');
+        set(handles.iterations, 'visible', 'off');
     case 6
         order = size(arr, 1);
         ent= {};

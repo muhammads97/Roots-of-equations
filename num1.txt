@@ -1,4 +1,4 @@
 x.^2 - 4
-general
+modified newton
 5
 0.0001

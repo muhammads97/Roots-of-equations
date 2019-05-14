@@ -1,4 +1,4 @@
-function [p,precision,arr,etime]=  general(eqn,iter,tol  , s_step , plot_m , p0, handles)
+function [p,precision,arr,etime]=  general(eqn,iter,tol  , s_step , plot_m ,handles, p0 )
 tic;    
 format shortG
 format compact
@@ -7,7 +7,7 @@ old_f = inline(eqn);
 if(~exist('p0', 'var'))
     p0 = get_guess(inline(eqn));
 end
-eqn = strcat(eqn , ' + x') ;
+eqn = strcat(eqn , ' + x^1 ') ;
 f = inline(eqn);
 arr = zeros(1 , 6);
 for i=1:iter   % get ready to do a large, but finite, number of iterations.

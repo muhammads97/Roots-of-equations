@@ -854,14 +854,13 @@ function solve_Callback(hObject, eventdata, handles)
                     [x14, err4, arr4, eTime4] = newton(eqn, x0, iter, eps, false, false, handles);
                     [xi5, arr5, i5, err5, ex_time5, x15, x05] = Secant(x0, x1, eps, iter, eqn, false, false, handles);
                     [root6,xi6, arr6, i6, err6, ex_time6] = Modified_NewtonRaphson(eqn, x0, eps, iter, false, false,handles)
-                    [p7,precision7,arr7,etime7]=  general(eqn,iter,eps  , false , false , handles)
-                    str = strcat('bisection => root : ',num2str(r1) ,'    precision : ' ,num2str((1 - err1)*100), '  time :',num2str(eTime1),char(10));
-                    str = strcat(str , '   false-position => root     : ',num2str(xr2) ,' precision : ' ,num2str(presion2), '  time :',num2str(elapsed2),char(10));
-                    str = strcat(str , '   fixed_point   => root    : ',num2str(xi3) ,'    precision    : ' ,num2str(presion3), '  time   :',num2str(elapsed_time3),char(10));
-                    str = strcat(str , '   newton => root :    ',num2str(x14) ,'    precision : ' ,num2str((1 - err4)*100), '  time :',num2str(eTime4),char(10));
-                    str = strcat(str , '   Secant =>  root :    ',num2str(xi5) ,' precision : ' ,num2str((100 - err5)), '  time :',num2str(ex_time5),char(10));
-                    str = strcat(str , '   Modified_NewtonRaphson =>   root   : ',num2str(root6) ,' precision : ',num2str((100 - err6)), '  time :',num2str(ex_time6),char(10));
-                    str = strcat(str , '   general =>   root : ',num2str(p7) ,' precision : ',num2str(precision7), '  time :',num2str(etime7));
+                    [p,precision,arr,etime]=  general(eqn,iter,eps  , false , true , handles)
+                    str = strcat('bisection =>   root : ',num2str(r1) ,'  precision : ' ,num2str((1 - err1)*100), '  time :',num2str(eTime1),char(10));
+                    str = strcat(str , '   false-position =>   root : ',num2str(xr2) ,' precision : ' ,num2str(presion2), '  time :',num2str(elapsed2),char(10));
+                    str = strcat(str , '   fixed_point =>   root : ',num2str(xi3) ,' precision : ' ,num2str(presion3), '  time :',num2str(elapsed_time3),char(10));
+                    str = strcat(str , '   newton =>   root : ',num2str(x14) ,' precision : ' ,num2str((1 - err4)*100), '  time :',num2str(eTime4),char(10));
+                    str = strcat(str , '   Secant =>   root : ',num2str(xi5) ,' precision : ' ,num2str((100 - err5)), '  time :',num2str(ex_time5),char(10));
+                    str = strcat(str , '   general algorithm =>   root : ',num2str(root6) ,' precision : ',num2str((100 - err6)), '  time :',num2str(ex_time6));
                     
                     set(handles.sol, 'String', str);
                     
@@ -877,9 +876,8 @@ function solve_Callback(hObject, eventdata, handles)
                     plot(arr4(:,1), arr4(:, 3), 'y-x');
                     plot(arr5(:,1), arr5(:, 4), 'm-x');
                     plot(arr6(:,1), arr6(:, 3), 'c-x');
-                    plot(arr7(:,1), arr7(:, 5), 'k-x');
                     hold off;
-                    legend({'bisection', 'false position', 'fixed point', 'newton raphson', 'secant' ,'modified newton' , 'general'});
+                    legend({'bisection', 'false position', 'fixed point', 'newton raphson', 'secant' ,'general alg.'});
                     guidata(hObject,handles);
                     cla(handles.axes2);
                     axes(handles.axes2);
@@ -892,10 +890,9 @@ function solve_Callback(hObject, eventdata, handles)
                     plot(arr4(:,1), arr4(:, 4), 'y-x');
                     plot(arr5(:,1), arr5(:, 5), 'm-x');
                     plot(arr6(:,1), arr6(:, 4), 'c-x');
-                    plot(arr7(:,1), arr7(:, 6), 'k-x');
                     hold off;
-               legend({'bisection', 'false position', 'fixed point', 'newton raphson', 'secant' ,'modified newton' , 'general'});
-                    end
+                    legend({'bisection', 'false position', 'fixed point', 'newton raphson', 'secant','general alg.'});
+                end
             case 8
                 set(handles.axes2, 'visible', 'on');
                 set(handles.axes3, 'visible', 'on');
@@ -974,15 +971,15 @@ function solve_Callback(hObject, eventdata, handles)
                     end
                 end
                 if ~error
-                    [p,precision,arr,etime]=  general(eqn,iter,eps  , false , true , handles);
+                    [p,precision,arr,etime]=  general(eqn,iter,eps  , false , true , handles)
                     handles.save_root = p;
                     handles.save_error = 100 - precision;
                     handles.save_arr = arr;
                     handles.save_eTime = etime;
                     handles.save_name = 'general';
-                    handles.column_names ={ 'iter' , '  p0' , '  p1' ,'  p2' ,'  p','     error'};
+                    handles.column_names ={ 'iter' , 'p0' , 'p1' ,'p2' ,'p','error'};
                     guidata(hObject,handles);
-                    show_res(arr, handles, 9);
+                    show_res(arr, handles, 5);
                     str = strcat('root: ', num2str(p), ' | time of execution: ', num2str(etime), ' | error :', num2str(100 - precision));
                     set(handles.sol, 'String', str);
                 end
@@ -1224,8 +1221,7 @@ function solve_Callback(hObject, eventdata, handles)
                 handles.xi = x1;
                 data=get(handles.t, 'data');
                 set(handles.t, 'data', [cell(data);num2cell(arr)]);
-                guidata(hObject,handles);   
-            case 9 
+                guidata(hObject,handles);
         end
     end
     
@@ -1440,7 +1436,7 @@ function openFile_ClickedCallback(hObject, eventdata, handles)
             set(handles.all_param, 'visible', 'on');
             set(handles.s_step, 'Value', 0);
             set(handles.s_step, 'Visible', 'off');
-         case 'modified newton'
+         case 'general'
             set(handles.methods_menu, 'Value', 8.0);
             set(handles.newton_x0, 'String', intervals(1));
             set(handles.bi_param,'visible','off');
@@ -1448,16 +1444,6 @@ function openFile_ClickedCallback(hObject, eventdata, handles)
             set(handles.false_param,'visible','off');
             set(handles.secant_param,'visible','off');
             set(handles.newton_param,'visible','on');
-            set(handles.birge_param,'visible','off');
-            set(handles.n_root, 'visible', 'off');
-            set(handles.all_param, 'visible', 'off');
-         case 'general'
-            set(handles.methods_menu, 'Value', 9.0);
-            set(handles.bi_param,'visible','off');
-            set(handles.fixed_param,'visible','off');
-            set(handles.false_param,'visible','off');
-            set(handles.secant_param,'visible','off');
-            set(handles.newton_param,'visible','off');
             set(handles.birge_param,'visible','off');
             set(handles.n_root, 'visible', 'off');
             set(handles.all_param, 'visible', 'off');
