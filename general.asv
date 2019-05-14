@@ -1,15 +1,12 @@
-function [p,precision,arr,etime]=  general(eqn,iter,tol ,handles , s_step , plot_m , p0 )
+function [p,precision,arr,etime]=  general(eqn,iter,tol  , s_step , plot_m , p0, handles)
+tic;    
 format shortG
 format compact
-if(exist(handles, 'var')  )
-cla(handles.axes1);
-cla(handles.axes2);
-cla(handles.axes3);
-end
-tic;
+
 old_f = inline(eqn);
-if(~s_step)
+if(~s_step || ~exist('p0', 'var'))
     p0 = get_guess(inline(eqn));
+ 
 end
 eqn = strcat(eqn , ' + x') ;
 f = inline(eqn);

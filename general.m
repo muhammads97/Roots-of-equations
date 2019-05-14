@@ -2,11 +2,9 @@ function [p,precision,arr,etime]=  general(eqn,iter,tol  , s_step , plot_m , p0,
 tic;    
 format shortG
 format compact
-if ~exist('p0', 'var')
-     p0 = get_guess(inline(eqn));
-end
+
 old_f = inline(eqn);
-if(~s_step)
+if(~exist('p0', 'var'))
     p0 = get_guess(inline(eqn));
 end
 eqn = strcat(eqn , ' + x') ;
