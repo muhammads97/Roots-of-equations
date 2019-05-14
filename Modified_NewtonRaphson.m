@@ -52,7 +52,7 @@ arr
 
 ex_time = toc;
 if (plotMode)
-    x = linspace(xi - 5, xi + 5);
+    x = linspace(xi - 50, xi + 50);
     axes(handles.axes3);
     plot(arr(:,1), arr(:,3))
     xlabel('num of itr');
@@ -66,30 +66,25 @@ if (plotMode)
     plot(x,fx);
     xlabel('x')
     ylabel('f(X)');
-    hold on
-    plot( [x0 , x1 , xi  ],  [ f(x0) , 0 ] , '--or' ,'Color', [0 0.7 0])
-    plot(  [xi , xi  ],  [ 0 , f(xi)] , '--or', 'Color' , [1 0 0])
+    hold on;
+    plot( [x0 , xi  ],  [ f(x0) , 0 ] , '--or' ,'Color', [0 0.7 0]);
+    plot(  [xi , xi  ],  [ 0 , f(xi)] , '--or', 'Color' , [1 0 0]);
+
 end
 
 if (singleMode)
-    x = linspace(xi - 20, xi + 20);
+    x = linspace(x0 - 20, x0 + 20);
     axes(handles.axes1);
     y = linspace(min(f(x))-100 , max(f(x)) + 100);
-    plot(x, f(x),repmat(tempx0,[size(y) 1]), y,'g--', repmat(x1,[size(y) 1]) , y,'m--', 'LineWidth', 1);
+    plot(x, f(x),repmat(tempx0,[size(y) 1]), y,'g--', repmat(x0,[size(y) 1]) , y,'m--', 'LineWidth', 1);
     hold on;
     slope = dfn(tempx0);
     cuttenPart = f(tempx0) - slope*tempx0;
-    x = linspace(tempx0 - 3,xi + 3, 50);
+    x = linspace(tempx0 - 3,x0 + 3, 50);
     y = slope*x+cuttenPart;
     plot(x,y);
     hold on;
     plot(tempx0,f(tempx0),'bo');
-    hold on;
-    slope2 = ddfn(tempx0);
-    cuttenPart2 = f(tempx0) - slope2*tempx0;
-    x2 = linspace(tempx0 - 3,xi + 3, 50);
-    y2 = slope2*x2+cuttenPart2;
-    plot(x2,y2);
     hold on;
     
 end
