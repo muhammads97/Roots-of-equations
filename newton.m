@@ -6,7 +6,9 @@ f = inline(eqn);
 e = strrep(eqn, '.^', '^');
 ftemp = sym(e);
 df  = diff(ftemp);
-fd = inline(df);
+fd = inline(df); %1ST DERVATIVE OF FUNCTION
+df2 = diff(df);
+ddfn = inline(df2);  %2ND DERVATIVE OF FUNCTION
 %disp(fd(2));
 x1 = 0;
 arr = zeros(1, 4);
@@ -21,6 +23,7 @@ for i = 1 : n
     end
     x1 = x0 - (f(x0) / fd(x0));
     err = abs((x1 - x0) / x1);
+    theoritical_error = ddfn(x1)/2*fd(x1);  %THEORETICAL ERROR IN EACH ITERATE
     arr(i, 3) = x1;
     arr(i, 4) = err;
     x0 = x1;

@@ -40,6 +40,7 @@ for i = 1:iter
     end
     err = abs((xi - x0) / xi) ;
     old_error = err;
+    rate_of_convergence = df_dx(x0); %THEORETICAL ERROR IN EACH ITERATE (IF < 1 CONVERGE)(IF > 1 DIVERGE)
     presion = (1 - err) * 100;
     arr(i , :) = [i xi err];
     if(err < epsilon)
