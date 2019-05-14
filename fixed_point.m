@@ -11,7 +11,7 @@ df_dx = inline(df); % fisrt derivative
 f = inline(eqn);
 presion = 0;
 xi = 0;
-arr = zeros(1,3);
+arr = zeros(1,4);
 gx = df_dx(x0); % g`(x) 
 
 % drawing single mood 
@@ -42,7 +42,7 @@ for i = 1:iter
     old_error = err;
     rate_of_convergence = df_dx(x0); %THEORETICAL ERROR IN EACH ITERATE (IF < 1 CONVERGE)(IF > 1 DIVERGE)
     presion = (1 - err) * 100;
-    arr(i , :) = [i xi err];
+    arr(i , :) = [i xi err rate_of_convergence];
     if(err < epsilon)
         break;
     end

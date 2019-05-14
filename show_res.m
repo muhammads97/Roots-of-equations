@@ -18,14 +18,14 @@ switch method
         set(handles.select_root, 'visible', 'off');
         set(handles.iterations, 'visible', 'off');
     case 3
-        col = {'i','Xi', 'error'};
+        col = {'i','Xi', 'error' , 'g`(x)'};
         t=uitable(arr, col, 'position', [850, 50, 350, 450]);
         set(handles.text18, 'visible', 'off');
         set(handles.text21, 'visible', 'off');
         set(handles.select_root, 'visible', 'off');
         set(handles.iterations, 'visible', 'off');
     case 4
-        col = {'i', 'Xi', 'Xi+1', 'error'};
+        col = {'i', 'Xi', 'Xi+1', 'error', 'theoritical error'};
         handles.t=uitable(arr, col, 'position', [850, 50, 350, 450]);
         set(handles.text18, 'visible', 'off');
         set(handles.text21, 'visible', 'off');

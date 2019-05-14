@@ -11,7 +11,7 @@ df2 = diff(df);
 ddfn = inline(df2);  %2ND DERVATIVE OF FUNCTION
 %disp(fd(2));
 x1 = 0;
-arr = zeros(1, 4);
+arr = zeros(1, 5);
 tempx0 = x0;
 err = inf;
 tic
@@ -26,6 +26,7 @@ for i = 1 : n
     theoritical_error = ddfn(x1)/2*fd(x1);  %THEORETICAL ERROR IN EACH ITERATE
     arr(i, 3) = x1;
     arr(i, 4) = err;
+    arr(i ,5) =theoritical_error;
     x0 = x1;
     if (err < tol)
         break;
