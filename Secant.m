@@ -43,7 +43,7 @@ end
 for  i = 1 : iterations
     itr(i) = i;
     arr(i, 1) = i;
-    xi = x1 - (f(x1))*((x1 - x0)/(f(x1) - f(x0)));
+    xi = x1 - (f(x1)*(x1 - x0)/(f(x1) - f(x0)));
     roots(i) = xi;
     err = abs((xi-x1)/xi)*100;
     errors(i) = err;
