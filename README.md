@@ -1,2 +1,0 @@
-# RootsOfEquation
-# RootsOfEquations
